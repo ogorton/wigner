@@ -364,6 +364,11 @@ module wigner
             real(kind=8) :: sj
             integer :: minj, maxj
 
+            if (.not.allocated(sixj_table)) then
+                print*,"Initializing six-J table for the first time..."
+                call sixj_table_init()
+            end if            
+
             minj = min(j1,j2,j3,l1,l2,l3)
             maxj = max(j1,j2,j3,l1,l2,l3)
             tablemin_used = min(tablemin_used, minj)
@@ -379,6 +384,11 @@ module wigner
         end function sixj_lookup
 
         function ninej(j1,j2,j3,j4,j5,j6,j7,j8,j9) result(nj)
+
+            ! Computes the wigner nine-j symbol with arguments
+            !   j1/2 j2/2 j3/2
+            !   j4/2 j5/2 j6/2
+            !   j7/2 j8/2 j9/2            
             
             implicit none
             integer :: j1,j2,j3,j4,j5,j6,j7,j8,j9
