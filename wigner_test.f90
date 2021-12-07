@@ -13,9 +13,8 @@ program main
     minsj2i = tablemin2j
     maxsj2i = tablemax2j
 
-
-    call sixj_table_init(0,22)
-    call threej_table_init()
+    call threej_table_init(0,30)
+    call sixj_table_init(0,30)
 
     call system_clock(count_rate = clock_rate)
     call system_clock(count = ti)
@@ -37,6 +36,5 @@ program main
 
     call system_clock(count = tf)
     print*,'Time:',real((tf-ti))/real(clock_rate)
-
 
 end program
