@@ -34,3 +34,6 @@ test
 
 # vim files
 *.swp
+
+# mac fs
+.DS_Store
