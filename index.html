@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Oliver C. Gorton" />
+  <title>Wigner Functions in Modern Fortran</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Wigner Functions in Modern Fortran</h1>
+<p class="author">Oliver C. Gorton</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#j-and-6-j-symbols">3-J and 6-J Symbols</a></li>
+<li><a href="#j-symbol">9-J Symbol</a></li>
+<li><a href="#compile-and-test">Compile and test</a></li>
+<li><a href="#theory">Theory</a></li>
+</ul>
+</nav>
+<p>This is a library of functions for computation of Wigner 3-j, 6-j and 9-j symbols using algebraic expressions in terms of factorials. Should be accurate to <span class="math inline">\(10^{-10}\)</span> relative error for values less than about j=20.</p>
+<p>The code is available in this public <a href="https://github.com/ogorton/wigner">GitHub repository</a>.</p>
+<p>You can <a href="readme.pdf">download</a> this page as a pdf.</p>
+<p>For an analysis of relative error compared to more modern methods, see <a href="https://arxiv.org/abs/1504.08329">arXiv:1504.08329</a> by H. T. Johansson and C. Forssen. A more accurate but slower method involves prime factorization of integers. In old Fortran, see work by <a href="https://doi.org/10.1016/S0010-4655(99)00232-5">Liqiang Wei: Computer Physics Communications 120 (1999) 222-230</a>.</p>
+<p>All integer arguments are 2j in order to accomadate half-integer arguments while taking advantage of faster integer-arithmetic. Invalid arguments return 0d0 and program continues.</p>
+<p>Optionally, compile with OpenMP to accelerate table initialization.</p>
+<p>List of real(kind=8) functions:</p>
+<ul>
+<li><code>logfac(n)</code></li>
+<li><code>logdoublefac(n)</code></li>
+<li><code>triangle(two_j1, two_j2, two_j3)</code></li>
+<li><code>vector_couple(two_j1, two_m1, two_j2, two_m2, two_jc, two_mc)</code></li>
+<li><code>threej(two_j1, two_j2, two_j3, two_m1, two_m2, two_m3)</code></li>
+<li><code>threej_lookup(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)</code></li>
+<li><code>sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)</code></li>
+<li><code>sixj_lookup(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)</code></li>
+<li><code>ninej(two_j1,two_j2,two_j3,two_j4,two_j5,two_j6,two_j7,two_j8,two_j9)</code></li>
+</ul>
+<p>List of subroutines:</p>
+<ul>
+<li><code>threej_table_init(min2j, max2j)</code></li>
+<li><code>sixj_table_init(min2j, max2j)</code></li>
+</ul>
+<h1 id="j-and-6-j-symbols">3-J and 6-J Symbols</h1>
+<p>Real function. Arguments of the function are twice those computed. For each of the following functions and routines, an equivalent one exists for the ‘three’-J symbol.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode fortran"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3) <span class="kw">result</span>(sj)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">! Computes the wigner six-j symbol with arguments</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">!    two_j1/2 two_j2/2 two_j3/2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">!    two_l1/2 two_l2/2 two_l3/2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">! using explicit algebraic expressions from Edmonds (1955/7).</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span> <span class="dt">::</span> j1,j2,j3,l1,l2,l3</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">real(kind8)</span> <span class="dt">::</span> sj</span></code></pre></div>
+<p>Lookup table initialization. Optional arguments set the lower and upper limits of values stored in the table.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode fortran"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">subroutine</span> sixj_table_init(min2j, max2j)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span>, <span class="dt">optional</span> <span class="dt">::</span> min2j, max2j</span></code></pre></div>
+<p>Lookup table lookup-function. This function tries to lookup the requested symbols in the allocated table, otherwise it calls the <code>sixj</code> function.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode fortran"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sixj_lookup(two_j1, two_j2, two_j3,<span class="kw">&amp;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                     two_l1, two_l2, two_l3) <span class="kw">result</span>(sj)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span> <span class="dt">::</span> two_j1,two_j2,two_j3,two_l1,two_l2,two_l3</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">real(kind=8)</span> <span class="dt">::</span> sj</span></code></pre></div>
+<h1 id="j-symbol">9-J Symbol</h1>
+<p>Real function. We don’t include lookup table functions for the 9-J function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode fortran"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> ninej(two_j1, two_j2, two_j3,<span class="kw">&amp;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               two_j4, two_j5, two_j6,<span class="kw">&amp;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               two_j7, two_j8, two_j9) <span class="kw">result</span>(nj)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span> <span class="dt">::</span> two_j1,two_j2,two_j3</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span> <span class="dt">::</span> two_j4,two_j5,two_j6</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span> <span class="dt">::</span> two_j7,two_j8,two_j9</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">real(kind=8)</span> <span class="dt">::</span> nj</span></code></pre></div>
+<h1 id="compile-and-test">Compile and test</h1>
+<p>We include a test program which demonstrates how to implement the <code>wigner</code> functions and subroutines.</p>
+<p>Compile the <code>test</code> program:</p>
+<pre><code>gfortran wigner.f90 wigner_test.f90 -o test</code></pre>
+<p>Run the test program:</p>
+<pre><code>./test</code></pre>
+<p>Expected output:</p>
+<pre><code>Initializing three-j symbol table...
+ Table min. 2J:           0
+ Table max. 2J:          12
+Memory required (MB):     38.61
+ Table has been saved to memory.
+ Seconds to initialize:   7.48580024E-02
+Initializing six-j symbol table...
+ Table min. 2J:           0
+ Table max. 2J:          12
+Memory required (MB):     38.61
+Table has been saved to memory.
+Seconds to initialize:    0.5009
+ Jx2=           0
+ Jx2=           1
+ Jx2=           2
+ Jx2=           3
+ Jx2=           4
+ Jx2=           5
+ Jx2=           6
+ Jx2=           7
+ Jx2=           8
+ Jx2=           9
+ Jx2=          10
+ Jx2=          11
+ Jx2=          12
+ Example sixj value, sixj(1,3,5,1,1,3):   4.3643578047198470E-002
+ Time:  0.473100990 </code></pre>
+<h1 id="theory">Theory</h1>
+<p>We implement a standard set of functions and subroutines for computing the vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions found in Edmonds.</p>
+<p>For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling coefficients: <span class="math display">\[\begin{align*}
+    \begin{pmatrix}
+        j_1 &amp; j_2 &amp; J\\
+        m_1 &amp; m_1 &amp; M
+    \end{pmatrix}
+    = (-1)^{j_1-j_2-M}(2J+1)^{-1/2}\\ 
+    (j_1j_2m_1m_2 | j_1 j_2; J, -M).
+\end{align*}\]</span> The vector coupling coefficients are computed as: <span class="math display">\[\begin{align*}
+    (j_1j_2 &amp; m_1m_2 | j_1 j_2; J, M) = \delta(m_1+m_1,m) (2J+1)^{1/2}\Delta(j_1j_2J)\\
+    &amp; \times[(j_1+m_1)(j_1-m_1)(j_2+m_2)(j_2-m_2)(J+M)(J-M)]^{1/2}\sum_z (-1)^z \frac{1}{f(z)},
+\end{align*}\]</span> where <span class="math display">\[\begin{align*}
+    f(z) &amp;= z!(j_1+j_2-J-z)!(j_1-m_2-z)!\\
+    &amp; \times(j_2+m_2-z)!(J-j_2+m_1+z)!(J-m_1-m_2+z)!,
+\end{align*}\]</span> and <span class="math display">\[\begin{align*}
+    \Delta(abc) = \left[\frac{(a+b-c)!(a-b+c)!(-a+b+c)!}{(a+b+c+1)!} \right]^{1/2}.
+\end{align*}\]</span> The sum over <span class="math inline">\(z\)</span> is over all integers such that the factorials are well-defined (non-negative-integer arguments).</p>
+<p>Similarly, for the 6-j symbols: <span class="math display">\[\begin{align*}
+    \begin{Bmatrix}
+        j_1 &amp; j_2 &amp; j_3\\
+        m_1 &amp; m_1 &amp; m_3
+    \end{Bmatrix}
+    &amp;= \Delta(j_1j_2j_3)\Delta(j_1m_2m_3)\Delta(m_1j_2m_3)\\
+    &amp;\times \Delta(m_1m_2j_3) \sum_z (-1)^z\frac{(z+1)!}{g(z)},
+\end{align*}\]</span> with <span class="math display">\[\begin{align*}
+    g(z) &amp;= (\alpha - z)!(\beta-z)!(\gamma-z)!\\
+    &amp;\times (z-\delta)!(z-\epsilon)!(z-\zeta)!(z-\eta)!
+\end{align*}\]</span> <span class="math display">\[\begin{align*}
+    \alpha &amp;= j_1+j_1+m_1+m_2 &amp; \beta  &amp;= j_2+j_3+m_2+m_3\\
+    \gamma &amp;= j_3+j_1+m_3+m_1 \\
+    \delta &amp;= j_1+j_2+j_3 &amp; \epsilon &amp;= j_1+m_2+m_3 \\
+    \zeta &amp;= m_1+j_2+m_3 &amp; \eta &amp;= m_1+m_2+j_3.
+\end{align*}\]</span></p>
+<p>For the 9-j symbol, we use the relation to the 6-j symbol: <span class="math display">\[\begin{align*}
+        \begin{Bmatrix}
+        j_1 &amp; j_2 &amp; j_3\\
+        j_4 &amp; j_5 &amp; j_6\\
+        j_7 &amp; j_8 &amp; j_9
+    \end{Bmatrix}
+    &amp;= \sum_k (-1)^{2k} (2k+1) \\
+        &amp;\times \begin{Bmatrix}
+        j_1 &amp; j_4 &amp; j_7\\
+        j_8 &amp; j_9 &amp; z
+        \end{Bmatrix}
+        \begin{Bmatrix}
+        j_2 &amp; j_5 &amp; j_8\\
+        j_4 &amp; z &amp; j_6
+        \end{Bmatrix}
+        \begin{Bmatrix}
+        j_3 &amp; j_6 &amp; j_9\\
+        z &amp; j_1 &amp; j_2
+        \end{Bmatrix}.        
+\end{align*}\]</span> The 6-j symbols used to calculate the 9-j symbol are first taken from any tabulated values. Otherwise, they are computed as previously described.</p>
+</body>
+</html>

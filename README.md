@@ -1,10 +1,20 @@
-# Wigner Functions in Modern Fortran
+---
+title: Wigner Functions in Modern Fortran
+author:
+- Oliver C. Gorton
+header-includes: |
+    \usepackage{amsmath}
+    \usepackage{physics}
+---
 
-*By Oliver Gorton, San Diego State University, 2021.12.7*
-
-Library of functions for computation of Wigner 3-j, 6-j and 9-j symbols
-using algebraic expressions in terms of factorials. Should be accurate
+This is a library of functions for computation of Wigner 3-j, 6-j and 9-j
+symbols using algebraic expressions in terms of factorials. Should be accurate
 to $10^{-10}$ relative error for values less than about j=20.
+
+The code is available in this public 
+[GitHub repository](https://github.com/ogorton/wigner).
+
+You can [download](readme.pdf) this page as a pdf.
 
 For an analysis of relative error compared to more modern methods, see
 [arXiv:1504.08329](https://arxiv.org/abs/1504.08329) by H. T. Johansson and C.
@@ -35,7 +45,7 @@ List of subroutines:
 - `threej_table_init(min2j, max2j)`
 - `sixj_table_init(min2j, max2j)`
 
-## 3-J and 6-J Symbols
+# 3-J and 6-J Symbols
 Real function. Arguments of the function are twice those computed. For each of
 the following functions and routines, an equivalent one exists for the 'three'-J
 symbol.
@@ -66,7 +76,7 @@ function sixj_lookup(two_j1, two_j2, two_j3,&
     integer :: two_j1,two_j2,two_j3,two_l1,two_l2,two_l3
     real(kind=8) :: sj
 ```
-## 9-J Symbol
+# 9-J Symbol
 Real function. We don't include lookup table functions for the 9-J function. 
 
 ```Fortran
@@ -80,7 +90,7 @@ function ninej(two_j1, two_j2, two_j3,&
     real(kind=8) :: nj
 ```
 
-## Compile and test
+# Compile and test
 
 We include a test program which demonstrates how to implement the `wigner`
 functions and subroutines.
@@ -123,7 +133,7 @@ Seconds to initialize:    0.5009
  Example sixj value, sixj(1,3,5,1,1,3):   4.3643578047198470E-002
  Time:  0.473100990 
 ```
-## Theory
+# Theory
 We implement a standard set of functions and subroutines for computing the
 vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions
 found in Edmonds.
