@@ -227,12 +227,10 @@
 <li><a href="#theory">Theory</a></li>
 </ul>
 </nav>
-<p>This is a library of functions for computation of Wigner 3-j, 6-j and 9-j symbols using algebraic expressions in terms of factorials. Should be accurate to <span class="math inline">\(10^{-10}\)</span> relative error for values less than about j=20.</p>
+<p><a href="https://ogorton.github.io/wigner/">View as a webapge.</a></p>
+<p>This is a library of functions for computation of Wigner 3-j, 6-j and 9-j symbols using algebraic expressions in terms of factorials. It is expected to be accurate to <span class="math inline">\(10^{-10}\)</span> relative error for values less than about j=20.</p>
 <p>The code is available in this public <a href="https://github.com/ogorton/wigner">GitHub repository</a>.</p>
 <p>You can <a href="readme.pdf">download</a> this page as a pdf.</p>
-<p>For an analysis of relative error compared to more modern methods, see <a href="https://arxiv.org/abs/1504.08329">arXiv:1504.08329</a> by H. T. Johansson and C. Forssen. A more accurate but slower method involves prime factorization of integers. In old Fortran, see work by <a href="https://doi.org/10.1016/S0010-4655(99)00232-5">Liqiang Wei: Computer Physics Communications 120 (1999) 222-230</a>.</p>
-<p>All integer arguments are 2j in order to accomadate half-integer arguments while taking advantage of faster integer-arithmetic. Invalid arguments return 0d0 and program continues.</p>
-<p>Optionally, compile with OpenMP to accelerate table initialization.</p>
 <p>List of real(kind=8) functions:</p>
 <ul>
 <li><code>logfac(n)</code></li>
@@ -250,6 +248,8 @@
 <li><code>threej_table_init(min2j, max2j)</code></li>
 <li><code>sixj_table_init(min2j, max2j)</code></li>
 </ul>
+<p>All integer arguments are 2j in order to accomadate half-integer arguments while taking advantage of faster integer-arithmetic. Invalid arguments return 0d0 and program continues.</p>
+<p>Optionally, compile with OpenMP to accelerate table initialization.</p>
 <h1 id="j-and-6-j-symbols">3-J and 6-J Symbols</h1>
 <p>Real function. Arguments of the function are twice those computed. For each of the following functions and routines, an equivalent one exists for the ‘three’-J symbol.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode fortran"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3) <span class="kw">result</span>(sj)</span>
@@ -317,6 +317,7 @@ Seconds to initialize:    0.5009
  Time:  0.473100990 </code></pre>
 <h1 id="theory">Theory</h1>
 <p>We implement a standard set of functions and subroutines for computing the vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions found in Edmonds.</p>
+<p>For an analysis of relative error compared to more modern methods, see <a href="https://arxiv.org/abs/1504.08329">arXiv:1504.08329</a> by H. T. Johansson and C. Forssen. A more accurate but slower method involves prime factorization of integers. In old Fortran, see work by <a href="https://doi.org/10.1016/S0010-4655(99)00232-5">Liqiang Wei: Computer Physics Communications 120 (1999) 222-230</a>.</p>
 <p>For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling coefficients: <span class="math display">\[\begin{align*}
     \begin{pmatrix}
         j_1 &amp; j_2 &amp; J\\

@@ -10,25 +10,13 @@ header-includes: |
 [View as a webapge.](https://ogorton.github.io/wigner/)
 
 This is a library of functions for computation of Wigner 3-j, 6-j and 9-j
-symbols using algebraic expressions in terms of factorials. Should be accurate
-to $10^{-10}$ relative error for values less than about j=20.
+symbols using algebraic expressions in terms of factorials. It is expected to 
+be accurate to $10^{-10}$ relative error for values less than about j=20.
 
 The code is available in this public 
 [GitHub repository](https://github.com/ogorton/wigner).
 
 You can [download](readme.pdf) this page as a pdf.
-
-For an analysis of relative error compared to more modern methods, see
-[arXiv:1504.08329](https://arxiv.org/abs/1504.08329) by H. T. Johansson and C.
-Forssen. A more accurate but slower method involves prime factorization of
-integers. In old Fortran, see work by [Liqiang Wei: Computer Physics
-Communications 120 (1999) 222-230](https://doi.org/10.1016/S0010-4655(99)00232-5).
-
-All integer arguments are 2j in order to accomadate half-integer
-arguments while taking advantage of faster integer-arithmetic.
-Invalid arguments return 0d0 and program continues.
-
-Optionally, compile with OpenMP to accelerate table initialization.
 
 List of real(kind=8) functions:
 
@@ -46,6 +34,12 @@ List of subroutines:
 
 - `threej_table_init(min2j, max2j)`
 - `sixj_table_init(min2j, max2j)`
+
+All integer arguments are 2j in order to accomadate half-integer
+arguments while taking advantage of faster integer-arithmetic.
+Invalid arguments return 0d0 and program continues.
+
+Optionally, compile with OpenMP to accelerate table initialization.
 
 # 3-J and 6-J Symbols
 Real function. Arguments of the function are twice those computed. For each of
@@ -139,6 +133,12 @@ Seconds to initialize:    0.5009
 We implement a standard set of functions and subroutines for computing the
 vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions
 found in Edmonds.
+
+For an analysis of relative error compared to more modern methods, see
+[arXiv:1504.08329](https://arxiv.org/abs/1504.08329) by H. T. Johansson and C.
+Forssen. A more accurate but slower method involves prime factorization of
+integers. In old Fortran, see work by [Liqiang Wei: Computer Physics
+Communications 120 (1999) 222-230](https://doi.org/10.1016/S0010-4655(99)00232-5).
 
 For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling
 coefficients: 
