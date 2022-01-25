@@ -315,7 +315,7 @@ Seconds to initialize:    0.5009
  Example sixj value, sixj(1,3,5,1,1,3):   4.3643578047198470E-002
  Time:  0.473100990 </code></pre>
 <h1 id="theory">Theory</h1>
-<p>We implement a standard set of functions and subroutines for computing the vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions found in Edmonds.</p>
+<p>We implement a standard set of functions and subroutines for computing the vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions found in Edmonds<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <p>For an analysis of relative error compared to more modern methods, see <a href="https://arxiv.org/abs/1504.08329">arXiv:1504.08329</a> by H. T. Johansson and C. Forssen. A more accurate but slower method involves prime factorization of integers. In old Fortran, see work by <a href="https://doi.org/10.1016/S0010-4655(99)00232-5">Liqiang Wei: Computer Physics Communications 120 (1999) 222-230</a>.</p>
 <p>For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling coefficients: <span class="math display">\[\begin{align*}
     \begin{pmatrix}
@@ -369,5 +369,11 @@ Seconds to initialize:    0.5009
         z &amp; j_1 &amp; j_2
         \end{Bmatrix}.        
 \end{align*}\]</span> The 6-j symbols used to calculate the 9-j symbol are first taken from any tabulated values. Otherwise, they are computed as previously described.</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>The classic book on angular momentum “Angular momentum in quantum mechanics” by A.R. Edmonds. Get a free copy <a href="https://cds.cern.ch/record/212213/files/p1.pdf">from CERN</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 </body>
 </html>

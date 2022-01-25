@@ -132,7 +132,11 @@ Seconds to initialize:    0.5009
 # Theory
 We implement a standard set of functions and subroutines for computing the
 vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions
-found in Edmonds.
+found in Edmonds[^ed].
+
+[^ed]: The classic book on angular momentum "Angular momentum in quantum
+  mechanics" by A.R. Edmonds. Get a free copy 
+  [from CERN](https://cds.cern.ch/record/212213/files/p1.pdf). 
 
 For an analysis of relative error compared to more modern methods, see
 [arXiv:1504.08329](https://arxiv.org/abs/1504.08329) by H. T. Johansson and C.
