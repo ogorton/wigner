@@ -1,6 +1,6 @@
 [View the docs](https://ogorton.github.io/wigner/)
 
-[Download the docs](documentation.pdf)
+[Download the docs](wignerdocs.pdf)
 
 [View the repository](https://github.com/ogorton/wigner)
 
