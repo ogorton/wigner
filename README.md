@@ -1,3 +1,5 @@
+# Wigner 3-j, 6-j, 9-j functions
+
 [View the docs](https://ogorton.github.io/wigner/)
 
 [Download the docs](wignerdocs.pdf)
