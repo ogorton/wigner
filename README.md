@@ -2,10 +2,6 @@
 
 [Download the docs](wignerdocs.pdf)
 
-[View the repository](https://github.com/ogorton/wigner)
-
-
-
 This is a library of functions for computation of Wigner 3-j, 6-j and 9-j
 symbols using algebraic expressions in terms of factorials. It is expected to 
 be accurate to $10^{-10}$ relative error for values less than about j=20.

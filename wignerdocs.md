@@ -5,16 +5,18 @@ author:
 header-includes: |
     \usepackage{amsmath}
     \usepackage{physics}
+linkcolor: blue
+urlcolor: blue
+link-citations: yes
 ---
+
+[GitHub repository](https://github.com/ogorton/wigner)
+
+[Download the docs](wignerdocs.pdf)
 
 This is a library of functions for computation of Wigner 3-j, 6-j and 9-j
 symbols using algebraic expressions in terms of factorials. It is expected to 
 be accurate to $10^{-10}$ relative error for values less than about j=20.
-
-The code is available in this public 
-[GitHub repository](https://github.com/ogorton/wigner).
-
-You can [download](wignerdocs.pdf) this page as a pdf.
 
 List of real(kind=8) functions:
 
